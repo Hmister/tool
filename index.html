@@ -1,0 +1,303 @@
+<html>
+<head>
+        <title>Hmister - 工具箱</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="有趣网页,实用工具,网页特效,API应用,网页游戏">
+		<meta name="keywords" content="Hmister,工具,工具箱">
+        <meta name="theme-color" content="#279de4">
+		<link rel="shortcut icon" href="img/favicon.png"/>
+        <link rel="apple-touch-icon" href="img/apple-touch-icon.png"/>
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.uixsj.cn/css/docs.min.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+	    <script src="https://hm.baidu.com/hm.js?6717ce8c86df0b2590ad440a2ff1707c"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+	</head>
+	<body onload="init()">
+		<header class="navbar navbar-static-top bs-docs-nav" role="banner">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最全工具箱">在线工具</a>
+				</div>
+				<nav id="bs-navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="https://hmister.cn/" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="好玩、有趣的博客">Hmister博客</a></li>
+						<li><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="给我留言">留言</a></li>
+						<li><a href="#" data-toggle="modal" data-target="#aboutmodal" id="about">关于</a></li>
+						<li>
+							<div class="searchbutton">
+								<input type="text" id="getsearch" placeholder="搜索...">
+								<button onclick="search()" data-toggle="modal" data-target="#searchmodal"></button>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<div class="preloader">
+					<div class="preloader-box">
+						<div>好</div>
+						<div>玩</div>
+						<div>-</div>
+						<div>-</div>
+						<div>有</div>
+						<div>趣</div>
+					</div>
+				</div>
+				<p class="stitle">Hmister工具箱 - 好玩最重要</p>
+				<p class="notice">
+					<marquee direction="right" behavior="scroll" scrollamount="6" scrolldelay="0" loop="-1" hspace="10" vspace="10"></marquee>
+				</p>
+			</div>
+		</header>
+		<div class="nav-list">
+			<ul id="myTab" class="nav nav-tabs nav-justified">
+				<li class="active">
+					<a href="#fun" data-toggle="tab" id="toFun" class="fun">
+						有趣网站
+					</a>
+				</li>
+				<li>
+					<a href="#useful" data-toggle="tab" id="toUseful" class="toUseful">
+						实用工具
+					</a>
+				</li>
+				<li>
+					<a href="#effect" data-toggle="tab" id="toEffect" class="toEffect">
+						网页特效
+					</a>
+				</li>
+			
+				<li>
+					<a href="#api" data-toggle="tab" id="toApi" class="toApi">
+						API应用
+					</a>
+				</li>
+				<li>
+					<a href="#game" data-toggle="tab" id="toGame" class="toGame">
+						网页游戏
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="container">
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="fun" ></div>
+				<div class="tab-pane fade" id="useful"></div>
+				<div class="tab-pane fade" id="effect"></div>
+				<div class="tab-pane fade" id="api"></div>
+				<div class="tab-pane fade" id="game"></div>
+				<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+		
+				<script>
+				
+			
+	
+				
+						$(function(){
+							getip();
+							setInterval("CurentTime();",1000); //每隔一秒运行一次
+							fun(1,'fun');
+							
+							$(".toUseful").on("click", function(){
+								fun(2,'useful');
+							});
+							$(".toEffect").on("click", function(){
+								fun(3,'effect');
+							});
+							$(".toApi").on("click", function(){
+								fun(4,'api');
+							});
+							$(".toGame").on("click", function(){
+								fun(5,'game');
+							});
+							
+					
+
+						})
+					//获取ip	
+					function getip(){
+						var ip = returnCitySN["cip"]+','+returnCitySN["cname"] ;
+						$("#ip").html(ip);
+					}
+					//随机汉字
+					function aa(str){
+						var values = Object.values(str);
+						var randomIndex = Math.round( Math.random()*(values.length-1 - 0) + 0); 
+						return values[randomIndex];
+
+					}
+					
+				
+					
+					function fun(id,type){
+							$.ajax({
+									url:'admin/data/queryall.php',
+									type:"post",
+									data:{type:id},
+									success:function(da)
+									{
+										data = $.parseJSON(da);
+										var str ="";
+										
+										for(var i = 0;i<data.length;i++){
+											var sj = parseInt(Math.random()*(6-1+1)+1);
+											var id = data[i].id;
+											var tool_name = data[i].tool_name;
+											var tool_url = data[i].tool_url;
+											var tool_clicks = data[i].tool_clicks;
+											str +='<a href="#" onclick="click_a(this)" id='+id+' data-url="'+tool_url+'" >';
+											str +='<li class="item"><div class="i-head">';
+											str +='<span class="open open'+sj+'">'+aa(tool_name)+'</span><p>'+tool_name+'</p></div>';
+											str +='<div class="i-body"><p class="hot"><i class="fa fa-eye" aria-hidden="true"></i>'+tool_clicks+'</p>';
+											str +='<p class="goto"><i class="fa fa-sign-in" aria-hidden="true"></i>Go</p></div></li></a>';
+										}
+										document.getElementById(type).innerHTML = str;
+										
+									}   
+								})
+					}
+					//点击量	
+					function click_a(e){
+						var url=$(e).attr("data-url");  
+						var id = $(e).attr("id");  
+					    $.ajax({
+							url:'ajax.php',
+							type:'post',
+							data:{link:id},
+							success: function () {
+								location.href=url;
+							}
+						});	
+					}
+					
+					function CurentTime(){ 
+						var now = new Date();
+						var year = now.getFullYear();       //年
+						var month = now.getMonth() + 1;     //月
+						var day = now.getDate();            //日
+						var hh = now.getHours();            //时
+						var mm = now.getMinutes();          //分
+						var ss = now.getSeconds();           //秒
+						var clock = year + "-";
+						if(month < 10)
+						clock += "0";
+						clock += month + "-";
+						if(day < 10)
+						clock += "0";
+						clock += day + " ";
+						if(hh < 10)
+						clock += "0";
+						clock += hh + ":";
+						if (mm < 10) clock += '0'; 
+						clock += mm + ":"; 
+						if (ss < 10) clock += '0'; 
+						clock += ss; 
+						$("#time").html(clock); //将值赋给div
+					}
+				</script>
+				
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<div class="nowtime">
+					<h4><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;当前时间</h4>
+					<div id="time"></div>
+				</div>
+				
+				<div class="weather">
+				
+					<h4><i class="fa fa-wifi"></i>&nbsp;您的IP地址</h4><p id="ip"></p>		</div>
+				<div class="oneword">
+					<h4><i class="fa fa-commenting-o" aria-hidden="true"></i>&nbsp;一言</h4>
+					<script type="text/javascript" src="https://api.uixsj.cn/hitokoto/w.php?code=js"></script>
+					<div id="xsjhitokoto">
+						<script>xsjhitokoto()</script>
+					</div>
+				</div>
+			</div>
+			<div class="contact">
+				<a id="weixin" data-toggle="popover" data-placement="top" data-original-title="" title="">
+					<i class="fa fa-weixin" aria-hidden="true"></i>
+				</a>
+				<a href="#">
+					<i class="fa fa-weibo" aria-hidden="true"></i>
+				</a>
+			</div>
+			<div class="copyright">
+				<span>Copyright ©  2019</span><a href="https://www.hmister.cn/">Hmister</a></div>
+		</footer>
+		<div class="modal fade" id="aboutmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+		<div class="modal fade" id="searchmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							×
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							搜索结果
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div id="searchresult"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="side">
+			<ul>
+				<li>
+					<a href="#fun" data-toggle="tab" id="goFun" class="fun">
+						<i class="fa fa-paper-plane-o" aria-hidden="true"><p>有趣</p></i>
+					</a>
+				</li>
+				<li>
+					<a href="#useful" data-toggle="tab" id="goUseful" class="toUseful">
+						<i class="fa fa-cubes" aria-hidden="true"><p>实用</p></i>
+					</a>
+				</li>
+				<li>
+					<a href="#effect" data-toggle="tab" id="goEffect" class="toEffect">
+						<i class="fa fa-fire" aria-hidden="true"><p>特效</p></i>
+					</a>
+				</li>
+
+				<li>
+					<a href="#api" data-toggle="tab" id="goApi" class="toApi">
+						<i class="fa fa-font" aria-hidden="true"><p>API</p></i>
+					</a>
+				</li>
+				<li>
+					<a href="#game" data-toggle="tab" id="goGame" class="toGame">
+						<i class="fa fa-gamepad" aria-hidden="true"><p>游戏</p></i>
+					</a>
+				</li>
+				<li>
+					<a href="#" id="goTop">
+						<i class="fa fa-chevron-up" aria-hidden="true"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="https://cdn.uixsj.cn/js/docs.min.js"></script>
+<div class="runtop" title="返回顶部" style="position: fixed; bottom: 50px; right: 40px; opacity: 0; cursor: pointer;">
+<i class="fa fa-chevron-up" aria-hidden="true"></i>
+</div>
+</body>
+</html>
